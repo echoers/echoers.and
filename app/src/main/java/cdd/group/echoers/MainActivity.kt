@@ -3,9 +3,11 @@ package cdd.group.echoers
 import cdd.group.echoers.mvvm.view.BaseActivity
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.toast
 
@@ -24,20 +26,22 @@ class MainActivity : BaseActivity() {
     }
 
     override fun initListener() {
-        textView.setOnClickListener {
+        btnLogin.setOnClickListener {
             val dialog = alert("加载中...", "").build()
             dialog.show()
             GlobalScope.launch {
-                val login = async(IO) {
-                    repository.login("", "")
-                }.await()
+                val login = withContext(IO) {
+                    repository.loginAsync(etLoginName.text.toString(), etPassword.text.toString())
+                }
                 withContext(Main) {
                     dialog.dismiss()
                     val result = login.await()
                     if (result.code == 10000) {
                         Logger.json(result.toString())
+                        tvContent.text = result.toString()
                     } else {
                         toast(result.message)
+                        tvContent.text = result.toString()
                     }
                 }
             }

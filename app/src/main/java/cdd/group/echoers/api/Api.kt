@@ -21,6 +21,6 @@ interface Api {
 
     @POST("auth/login")
     @Headers("service_name: authservice")
-    fun login(@Query("loginName") loginName: String,
+    fun loginAsync(@Query("loginName") loginName: String,
               @Query("password") password: String): Deferred<Response<LoginResponse>>
 }
