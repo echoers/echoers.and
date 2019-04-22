@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
  * @package com.echoers.library.http
  * @date    2019/4/2 1:44 PM
  * @author  Raphael Zhang
- * @discription TODO
+ * @discription Retrofit应用类
  * @org     cdd.group
  * @email   raphael_zhang@echoers.cn
  **/
