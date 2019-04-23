@@ -13,6 +13,8 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        resourcePrefix "lib_"
+
         multiDexEnabled true
     }
     buildTypes {

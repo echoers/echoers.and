@@ -3,6 +3,8 @@ package com.echoers.library.components
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import com.echoers.library.R
+import kotlinx.android.synthetic.main.lib_dialog_laoding.*
 
 /**
  * Created by Raphael Zhang
@@ -14,10 +16,14 @@ import androidx.appcompat.app.AlertDialog
  * @org     cdd.group
  * @email   raphael_zhang@echoers.cn
  **/
-class LoadingDialog(context: Context): AlertDialog(context) {
+class LoadingDialog(context: Context, var message: String = "加载中..."): AlertDialog(context) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.lib_dialog_laoding)
 
+        tvMessage.text = message
+        setCancelable(false)
+        setCanceledOnTouchOutside(false)
     }
 }
