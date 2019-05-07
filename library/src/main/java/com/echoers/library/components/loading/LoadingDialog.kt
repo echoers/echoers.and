@@ -1,13 +1,18 @@
 package com.echoers.library.components.loading
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.echoers.library.R
 import org.jetbrains.anko.find
+import org.jetbrains.anko.runOnUiThread
+import org.jetbrains.anko.toast
 
 /**
  * Created by Raphael Zhang
@@ -19,7 +24,9 @@ import org.jetbrains.anko.find
  * @org     cdd.group
  * @email   raphael_zhang@echoers.cn
  **/
-class LoadingDialog(var message: String = "加载中..."): DialogFragment() {
+class LoadingDialog(var message: String = "加载中..."): DialogFragment(), LoadingDialogComponent {
+
+    private lateinit var tvMessage: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.lib_dialog_laoding, container, false)
@@ -28,7 +35,8 @@ class LoadingDialog(var message: String = "加载中..."): DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.find<TextView>(R.id.tvMessage).text = message
+        tvMessage = view.find(R.id.tvMessage)
+        tvMessage.text = message
     }
 
     override fun onStart() {
@@ -39,6 +47,36 @@ class LoadingDialog(var message: String = "加载中..."): DialogFragment() {
             val params = it.attributes
             params.width = it.windowManager.defaultDisplay.width
             it.attributes = params
+        }
+    }
+
+    override fun startLoading(context: Context) {
+        if (context is AppCompatActivity) {
+            dialog?.let {
+                if (!it.isShowing) {
+                    show(context.supportFragmentManager, null)
+                }
+            }
+        } else {
+            context.toast("当前Activity实例必须是AppCompatActivity或者其子类")
+        }
+    }
+
+    override fun stopLoading() {
+        dialog?.let {
+            if (it.isShowing) {
+                it.dismiss()
+            }
+        }
+    }
+
+    override fun setLoadingMessage(message: String) {
+        context?.let {
+            with(it) {
+                runOnUiThread {
+                    tvMessage.text = message
+                }
+            }
         }
     }
 }

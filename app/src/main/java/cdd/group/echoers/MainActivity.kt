@@ -27,14 +27,13 @@ class MainActivity : BaseActivity() {
 
     override fun initListener() {
         btnLogin.setOnClickListener {
-            val dialog = LoadingDialog()
-            dialog.show(supportFragmentManager, null)
+            startLoading()
             GlobalScope.launch {
                 val login = withContext(IO) {
                     repository.loginAsync(etLoginName.text.toString(), etPassword.text.toString())
                 }
                 withContext(Main) {
-                    dialog.dismiss()
+                    stopLoading()
                     val result = login.await()
                     if (result.code == 10000) {
                         Logger.json(result.toString())
@@ -45,7 +44,6 @@ class MainActivity : BaseActivity() {
                     }
                 }
             }
-
         }
     }
 }

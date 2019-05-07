@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit
  * @org     cdd.group
  * @email   raphael_zhang@echoers.cn
  **/
-class ApiFactory private constructor(var context: Context) {
+class ApiFactory private constructor(private val context: Context) {
 
     private val okHttpClient by lazy {
         OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS)
@@ -35,7 +35,7 @@ class ApiFactory private constructor(var context: Context) {
     }
 
     fun <T> createApi(clazz: Class<T>, endPoint: String? = null): T {
-        if (endPoint == null) throw IllegalArgumentException("endPoint should not be null")
+        if (endPoint.isNullOrEmpty()) throw IllegalArgumentException("endPoint should not be null or empty")
         if (BuildConfig.DEBUG) {
             val loggerInterceptor = HttpLoggingInterceptor {
                 Logger.d(it)

@@ -1,8 +1,10 @@
 package cdd.group.echoers.mvvm.view
 
+import android.app.Activity
 import cdd.group.echoers.api.Api
 import cdd.group.echoers.api.END_POINT
 import com.echoers.library.components.loading.LoadingDialog
+import com.echoers.library.components.loading.LoadingDialogComponent
 import com.echoers.library.http.ApiFactory
 import com.echoers.library.mvvm.view.AbsCompactActivity
 
@@ -18,31 +20,13 @@ import com.echoers.library.mvvm.view.AbsCompactActivity
  **/
 abstract class BaseActivity: AbsCompactActivity() {
 
-    private var loadingDialog = LoadingDialog()
+    private var loadingDialog: LoadingDialogComponent = LoadingDialog()
 
     val repository by lazy {
         ApiFactory.instance(this).createApi(Api::class.java, END_POINT)
     }
 
-    /**
-     * 显示加载对话框
-     */
-    fun showLoadingDialog() {
-        loadingDialog.dialog?.let {
-            if (!it.isShowing) {
-                loadingDialog.show(supportFragmentManager, null)
-            }
-        }
-    }
+    protected fun Activity.startLoading() = loadingDialog.startLoading(this)
 
-    /**
-     * 取消loading显示
-     */
-    fun dismissLoadingDialog() {
-        loadingDialog.dialog?.let {
-            if (it.isShowing) {
-                loadingDialog.dismiss()
-            }
-        }
-    }
+    protected fun Activity.stopLoading() = loadingDialog.stopLoading()
 }

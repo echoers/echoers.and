@@ -12,7 +12,7 @@ import androidx.multidex.MultiDexApplication
  * @org     cdd.group
  * @email   raphael_zhang@echoers.cn
  **/
-class AbsApplication: MultiDexApplication() {
+open class AbsApplication: MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
