@@ -1,6 +1,5 @@
 package com.echoers.library.components.loading
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,7 +23,7 @@ import org.jetbrains.anko.toast
  * @org     cdd.group
  * @email   raphael_zhang@echoers.cn
  **/
-class LoadingDialog(var message: String = "加载中..."): DialogFragment(), LoadingDialogComponent {
+class LoadingDialog(private var message: String = "加载中..."): DialogFragment(), LoadingDialogComponent {
 
     private lateinit var tvMessage: TextView
 
