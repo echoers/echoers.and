@@ -1,17 +1,14 @@
 package cdd.group.echoers
 
 import cdd.group.echoers.mvvm.view.BaseActivity
-import com.echoers.library.components.loading.LoadingDialog
-import com.orhanobut.logger.Logger
+import cdd.group.echoers.mvvm.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.jetbrains.anko.toast
 
 class MainActivity : BaseActivity() {
+
+    private val loginViewModel by lazy {
+        bindViewModel(LoginViewModel::class.java)
+    }
 
     override fun contentViewLayoutId(): Int {
         return R.layout.activity_main
@@ -27,23 +24,7 @@ class MainActivity : BaseActivity() {
 
     override fun initListener() {
         btnLogin.setOnClickListener {
-            startLoading()
-            GlobalScope.launch {
-                val login = withContext(IO) {
-                    repository.loginAsync(etLoginName.text.toString(), etPassword.text.toString())
-                }
-                withContext(Main) {
-                    stopLoading()
-                    val result = login.await()
-                    if (result.code == 10000) {
-                        Logger.json(result.toString())
-                        tvContent.text = result.toString()
-                    } else {
-                        toast(result.message)
-                        tvContent.text = result.toString()
-                    }
-                }
-            }
+            loginViewModel.login()
         }
     }
 }

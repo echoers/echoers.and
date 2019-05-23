@@ -1,12 +1,9 @@
 package cdd.group.echoers.mvvm.view
 
-import android.app.Activity
-import cdd.group.echoers.api.Api
-import cdd.group.echoers.api.END_POINT
-import com.echoers.library.components.loading.LoadingDialog
-import com.echoers.library.components.loading.LoadingDialogComponent
-import com.echoers.library.http.ApiFactory
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProviders
 import com.echoers.library.mvvm.view.AbsCompactActivity
+import com.echoers.library.mvvm.viewmodel.AbsViewModelFactory
 
 /**
  * Created by Raphael Zhang
@@ -18,15 +15,10 @@ import com.echoers.library.mvvm.view.AbsCompactActivity
  * @org     cdd.group
  * @email   raphael_zhang@echoers.cn
  **/
-abstract class BaseActivity: AbsCompactActivity() {
+open abstract class BaseActivity: AbsCompactActivity() {
 
-    private var loadingDialog: LoadingDialogComponent = LoadingDialog()
-
-    val repository by lazy {
-        ApiFactory.instance(this).createApi(Api::class.java, END_POINT)
+    protected fun <T: ViewModel> bindViewModel(clazz: Class<T>) : T {
+        return ViewModelProviders.of(this, AbsViewModelFactory(this)).get(clazz)
     }
 
-    protected fun Activity.startLoading() = loadingDialog.startLoading(this)
-
-    protected fun Activity.stopLoading() = loadingDialog.stopLoading()
 }
