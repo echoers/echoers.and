@@ -13,5 +13,5 @@ package cdd.group.echoers.entity
 data class Response<T>(
     val code: Int,
     val message: String,
-    val result: T
+    val results: T
 )

@@ -1,9 +1,12 @@
 package cdd.group.echoers.mvvm.viewmodel
 
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cdd.group.echoers.api.Api
 import cdd.group.echoers.api.END_POINT
+import cdd.group.echoers.entity.LoginResponse
 import com.echoers.library.http.ApiFactory
 import com.echoers.library.mvvm.viewmodel.AbsViewModel
 import kotlinx.coroutines.Dispatchers.IO
@@ -23,23 +26,30 @@ import kotlinx.coroutines.withContext
  **/
 class LoginViewModel(context: Context): BaseViewModel(context) {
 
+    private var loginResponse = MutableLiveData<LoginResponse>()
+
+    fun getLoginResponse(): LiveData<LoginResponse> {
+        return loginResponse
+    }
+
     fun login() {
         viewModelScope.launch {
             startLoading()
             val login = withContext(IO) {
-                repository.loginAsync("", "")
+                repository.loginAsync("test006", "96e79218965eb72c92a549dd5a330112")
             }
             withContext(Main) {
                 stopLoading()
                 try {
                     val result = login.await()
                     if (result.code == 10000) {
-                        toast("${result.result}")
+                        loginResponse.value = result.results
                     } else {
                         toast(result.message)
                     }
                 } catch (e: Exception) {
                     toast("${e.message}")
+                    e.printStackTrace()
                 }
             }
         }

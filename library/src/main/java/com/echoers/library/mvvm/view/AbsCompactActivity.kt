@@ -17,7 +17,6 @@ abstract class AbsCompactActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(contentViewLayoutId())
 
         initView()
         initData()
