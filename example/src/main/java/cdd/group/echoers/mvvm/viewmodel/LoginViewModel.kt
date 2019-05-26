@@ -21,11 +21,7 @@ import kotlinx.coroutines.withContext
  * @org     cdd.group
  * @email   raphael_zhang@echoers.cn
  **/
-class LoginViewModel(context: Context): AbsViewModel(context) {
-
-    private val repository by lazy {
-        ApiFactory.instance(context).createApi(Api::class.java, END_POINT)
-    }
+class LoginViewModel(context: Context): BaseViewModel(context) {
 
     fun login() {
         viewModelScope.launch {

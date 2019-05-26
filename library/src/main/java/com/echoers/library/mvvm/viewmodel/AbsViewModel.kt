@@ -15,7 +15,7 @@ import org.jetbrains.anko.toast
  * @org     cdd.group
  * @email   raphael_zhang@echoers.cn
  **/
-open class AbsViewModel(val context: Context): ViewModel() {
+open class AbsViewModel(private val context: Context): ViewModel() {
     private var loadingDialog: LoadingDialog = LoadingDialog(context)
 
     protected fun startLoading() {
