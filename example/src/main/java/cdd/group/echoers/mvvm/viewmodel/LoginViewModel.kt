@@ -32,11 +32,11 @@ class LoginViewModel(context: Context): BaseViewModel(context) {
         return loginResponse
     }
 
-    fun login() {
+    fun login(loginName: String, password: String) {
         viewModelScope.launch {
             startLoading()
             val login = withContext(IO) {
-                repository.loginAsync("test006", "96e79218965eb72c92a549dd5a330112")
+                repository.loginAsync(loginName, password)
             }
             withContext(Main) {
                 stopLoading()

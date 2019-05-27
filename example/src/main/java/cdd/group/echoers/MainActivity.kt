@@ -1,17 +1,14 @@
 package cdd.group.echoers
 
 import androidx.lifecycle.Observer
-import cdd.group.echoers.mvvm.view.BaseActivity
+import cdd.group.echoers.databinding.ActivityMainBinding
 import cdd.group.echoers.mvvm.viewmodel.LoginViewModel
 import com.echoers.library.mvvm.view.BaseCompactActivity
+import com.echoers.library.utils.MD5
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 
-class MainActivity : BaseCompactActivity<LoginViewModel, cdd.group.echoers.databinding.ActivityMainBinding>() {
-
-//    private val loginViewModel by lazy {
-//        bindViewModel(LoginViewModel::class.java)
-//    }
+class MainActivity : BaseCompactActivity<LoginViewModel, ActivityMainBinding>() {
 
     override fun contentViewLayoutId(): Int {
         return R.layout.activity_main
@@ -32,7 +29,7 @@ class MainActivity : BaseCompactActivity<LoginViewModel, cdd.group.echoers.datab
     override fun initListener() {
         btnLogin.setOnClickListener {
             mViewModel?.run {
-                login()
+                login(mViewDataBinding.etLoginName.text.toString(), MD5(mViewDataBinding.etPassword.text.toString()))
             }
         }
     }
