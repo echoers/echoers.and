@@ -26,6 +26,7 @@ abstract class BaseCompactActivity<VM: ViewModel, DB: ViewDataBinding>: AbsCompa
 
     override fun onCreate(savedInstanceState: Bundle?) {
         mViewDataBinding = DataBindingUtil.setContentView(this, contentViewLayoutId())
+        mViewDataBinding.lifecycleOwner = this
         mViewModel = obtainViewModel()
 
         super.onCreate(savedInstanceState)
