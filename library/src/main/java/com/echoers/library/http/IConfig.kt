@@ -1,4 +1,4 @@
-package cdd.group.echoers.api
+package com.echoers.library.http
 
 /**
  * Created by Raphael Zhang

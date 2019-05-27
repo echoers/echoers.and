@@ -1,4 +1,4 @@
-package cdd.group.echoers.entity
+package com.echoers.library.http
 
 /**
  * Created by Raphael Zhang
@@ -15,3 +15,9 @@ data class Response<T>(
     val message: String,
     val results: T
 )
+
+class ResponseCode {
+    companion object {
+        const val RESPONSE_OK = 10000
+    }
+}

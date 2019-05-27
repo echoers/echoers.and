@@ -1,7 +1,7 @@
 package cdd.group.echoers.api
 
 import cdd.group.echoers.entity.LoginResponse
-import cdd.group.echoers.entity.Response
+import com.echoers.library.http.Response
 import kotlinx.coroutines.Deferred
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -19,7 +19,7 @@ import retrofit2.http.Query
  **/
 interface Api {
 
-    @POST("auth/login")
+    @POST("auth/login_")
     @Headers("service_name: authservice")
     fun loginAsync(@Query("loginName") loginName: String,
               @Query("password") password: String): Deferred<Response<LoginResponse>>

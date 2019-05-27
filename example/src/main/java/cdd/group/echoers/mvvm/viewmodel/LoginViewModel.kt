@@ -3,16 +3,8 @@ package cdd.group.echoers.mvvm.viewmodel
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import cdd.group.echoers.api.Api
-import cdd.group.echoers.api.END_POINT
 import cdd.group.echoers.entity.LoginResponse
-import com.echoers.library.http.ApiFactory
-import com.echoers.library.mvvm.viewmodel.AbsViewModel
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.echoers.library.http.ResponseCode
 
 /**
  * Created by Raphael Zhang
@@ -33,24 +25,14 @@ class LoginViewModel(context: Context): BaseViewModel(context) {
     }
 
     fun login(loginName: String, password: String) {
-        viewModelScope.launch {
+        launch {
             startLoading()
-            val login = withContext(IO) {
-                repository.loginAsync(loginName, password)
-            }
-            withContext(Main) {
-                stopLoading()
-                try {
-                    val result = login.await()
-                    if (result.code == 10000) {
-                        loginResponse.value = result.results
-                    } else {
-                        toast(result.message)
-                    }
-                } catch (e: Exception) {
-                    toast("${e.message}")
-                    e.printStackTrace()
-                }
+            val result = repository.loginAsync(loginName, password)
+            stopLoading()
+            if (result.code == ResponseCode.RESPONSE_OK) {
+                toast(result.results.token)
+            } else {
+                toast(result.message)
             }
         }
     }
