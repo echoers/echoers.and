@@ -1,6 +1,5 @@
 package com.echoers.library.utils
 
-import android.text.TextUtils
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -15,10 +14,11 @@ import java.security.NoSuchAlgorithmException
  * @email   raphael_zhang@echoers.cn
  **/
 
+/**
+ * MD5加密
+ */
 fun MD5(string: String): String {
-    if (TextUtils.isEmpty(string)) {
-        return ""
-    }
+    if (string.isEmpty()) return  ""
     var md5: MessageDigest
     try {
         md5 = MessageDigest.getInstance("MD5")
