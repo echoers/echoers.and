@@ -5,7 +5,6 @@ import cdd.group.echoers.entity.LoginResponse
 import com.echoers.library.http.Response
 import com.echoers.library.http.ApiFactory
 import com.echoers.library.http.BaseRepository
-import com.echoers.library.http.END_POINT
 
 /**
  * Created by Raphael Zhang
