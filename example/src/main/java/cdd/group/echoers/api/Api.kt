@@ -19,7 +19,7 @@ import retrofit2.http.Query
  **/
 interface Api {
 
-    @POST("auth/login_")
+    @POST("auth/login")
     @Headers("service_name: authservice")
     fun loginAsync(@Query("loginName") loginName: String,
               @Query("password") password: String): Deferred<Response<LoginResponse>>
