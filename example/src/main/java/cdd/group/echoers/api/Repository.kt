@@ -20,10 +20,10 @@ import com.echoers.library.http.BaseRepository
 class Repository(context: Context): BaseRepository() {
 
     private val repository by lazy {
-        ApiFactory.instance(context).createApi(Api::class.java, END_POINT)
+        ApiFactory.getInstance(context).createApi(Api::class.java, END_POINT)
     }
 
     suspend fun loginAsync(loginName: String, password: String): Response<LoginResponse> {
-        return apiCall { repository.loginAsync(loginName, password).await() }
+        return apiCall { repository.loginAsync(loginName, password) }
     }
 }

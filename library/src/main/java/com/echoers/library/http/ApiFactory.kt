@@ -2,7 +2,7 @@ package com.echoers.library.http
 
 import android.content.Context
 import com.echoers.library.BuildConfig
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.echoers.library.utils.SingletonHolder
 import com.orhanobut.logger.Logger
 import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.Cache
@@ -48,19 +48,10 @@ class ApiFactory private constructor(private val context: Context) {
             .client(okHttpClient)
             .baseUrl(endPoint)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
 
         return retrofit.create(clazz)
     }
 
-    companion object {
-        @Volatile private var instance: ApiFactory? = null
-        fun instance(context: Context): ApiFactory =
-                instance ?: synchronized(ApiFactory::class.java) {
-                    instance ?: ApiFactory(context).also {
-                        instance = it
-                    }
-                }
-    }
+    companion object : SingletonHolder<ApiFactory, Context>(::ApiFactory)
 }
