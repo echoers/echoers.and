@@ -4,6 +4,14 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
 android {
     buildToolsVersion '28.0.3'
     compileSdkVersion 28
@@ -69,6 +77,9 @@ dependencies {
     api 'com.squareup.retrofit2:converter-gson:2.6.0'
     api 'com.orhanobut:logger:2.2.0'
     api 'org.greenrobot:eventbus:3.1.1'
+    // ARouter
+    api 'com.alibaba:arouter-api:1.4.1'
+    kapt 'com.alibaba:arouter-compiler:1.2.2'
     debugApi 'com.readystatesoftware.chuck:library:1.1.0'
     releaseApi 'com.readystatesoftware.chuck:library-no-op:1.1.0'
 }
