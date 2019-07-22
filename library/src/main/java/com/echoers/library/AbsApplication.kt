@@ -1,6 +1,8 @@
 package com.echoers.library
 
 import androidx.multidex.MultiDexApplication
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 
 /**
  * Created by Raphael Zhang
@@ -16,6 +18,15 @@ open class AbsApplication: MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
+
+        /**
+         * 初始化Logger，debug环境开启日志打印
+         */
+        Logger.addLogAdapter(object: AndroidLogAdapter() {
+            override fun isLoggable(priority: Int, tag: String?): Boolean {
+                return BuildConfig.DEBUG
+            }
+        })
     }
 
 }
