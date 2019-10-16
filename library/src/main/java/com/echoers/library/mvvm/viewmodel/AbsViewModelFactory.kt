@@ -19,6 +19,6 @@ open class AbsViewModelFactory(val context: Context): ViewModelProvider.NewInsta
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         val constructor = modelClass.getConstructor(Context::class.java)
-        return constructor.newInstance(context) as T
+        return constructor.newInstance(context)
     }
 }
